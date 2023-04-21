@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".main_menu">
 
+    <VideoView
+        android:id="@+id/vidBack"
+        android:layout_width="1920dp"
+        android:layout_height="1080dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
     <Button
         android:id="@+id/btnLeaderboard"
         android:layout_width="wrap_content"

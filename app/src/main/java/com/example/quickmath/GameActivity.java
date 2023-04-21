@@ -49,6 +49,8 @@ public class GameActivity extends AppCompatActivity {
     CountDownTimer mCountDownTimer;
     ObjectAnimator animator;
 
+    NumPadView npv;
+
     int timeInMilis = 0;
     int dbScore=0;
 
@@ -63,9 +65,9 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void inits(){
-        submit=findViewById(R.id.gumb);
+
         mainD=findViewById(R.id.mainD);
-        input=findViewById(R.id.input);
+        npv = findViewById(R.id.npv);
     }
 
     public void countdown(){
@@ -84,7 +86,8 @@ public class GameActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                showPopup(findViewById(R.id.lejout));
+
+                //showPopup(findViewById(R.id.lejout));
             }
         };
         mCountDownTimer.start();
@@ -115,9 +118,29 @@ public class GameActivity extends AppCompatActivity {
         countdown();
 
 
-
         startGame();
-        submit.setOnClickListener(new View.OnClickListener() {
+        npv.setCityButtonClickListener(new NumPadView.CityButtonClickListener() {
+            @Override
+            public void onCityButtonClick(int userInput) {
+                user_input=userInput;
+                if(rez != user_input){
+
+                    showPopup(findViewById(R.id.lejout));
+                    mCountDownTimer.cancel();
+                    animator.cancel();
+                }
+                else{
+                    score++;
+                    mCountDownTimer.cancel();
+                    mProgressBar.setProgress(0);
+                    startGame();
+                    countdown();
+                }
+            }
+        });
+
+
+        /*submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 user_input=Integer.parseInt(String.valueOf(input.getText()));
@@ -136,7 +159,7 @@ public class GameActivity extends AppCompatActivity {
                     countdown();
                 }
             }
-        });
+        });*/
 
 
 
@@ -243,6 +266,11 @@ public class GameActivity extends AppCompatActivity {
 
             super.onPostExecute(unused);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        // nothing
     }
 
 
