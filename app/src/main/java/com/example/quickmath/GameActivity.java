@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
@@ -58,9 +60,7 @@ public class GameActivity extends AppCompatActivity {
     Gson gson = new Gson();
 
 
-    public int generateNumber() {
-        int min = 1;
-        int max = 30;
+    public int generateNumber(int min,int max) {
         return (int)Math.floor(Math.random() * (max - min + 1) + min);
     }
 
@@ -87,7 +87,7 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
 
-                //showPopup(findViewById(R.id.lejout));
+                showPopup(findViewById(R.id.lejout));
             }
         };
         mCountDownTimer.start();
@@ -112,66 +112,98 @@ public class GameActivity extends AppCompatActivity {
 
         timeInMilis = 5000;
 
-        mProgressBar=(ProgressBar)findViewById(R.id.progressbar);
+        mProgressBar= findViewById(R.id.progressbar);
         mProgressBar.setProgress(0);
 
         countdown();
 
 
         startGame();
-        npv.setCityButtonClickListener(new NumPadView.CityButtonClickListener() {
-            @Override
-            public void onCityButtonClick(int userInput) {
-                user_input=userInput;
-                if(rez != user_input){
+        npv.setSubmitButtonClickListener(userInput -> {
+            user_input=userInput;
+            if(rez != user_input){
 
-                    showPopup(findViewById(R.id.lejout));
-                    mCountDownTimer.cancel();
-                    animator.cancel();
-                }
-                else{
-                    score++;
-                    mCountDownTimer.cancel();
-                    mProgressBar.setProgress(0);
-                    startGame();
-                    countdown();
-                }
+                showPopup(findViewById(R.id.lejout));
+                mCountDownTimer.cancel();
+                animator.cancel();
+            }
+            else{
+                score++;
+
+                Animation scaleDown = AnimationUtils.loadAnimation(this,R.anim.scale_down);
+                Animation scaleUp = AnimationUtils.loadAnimation(this,R.anim.scale_up);
+                mainD.startAnimation(scaleUp);
+                mainD.startAnimation(scaleDown);
+
+                mCountDownTimer.cancel();
+                mProgressBar.setProgress(0);
+                startGame();
+                countdown();
+
+
             }
         });
 
 
-        /*submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                user_input=Integer.parseInt(String.valueOf(input.getText()));
-                if(rez != user_input){
-
-                    showPopup(view);
-                    mCountDownTimer.cancel();
-                    animator.cancel();
-                }
-                else{
-                    input.setText("");
-                    score++;
-                    mCountDownTimer.cancel();
-                    mProgressBar.setProgress(0);
-                    startGame();
-                    countdown();
-                }
-            }
-        });*/
-
-
-
-
     }
 
-    public void startGame(){
-        int x = generateNumber();
-        int y = generateNumber();
-        String eq = x + " + " + y;
+    private String generateOp(){
+        String op = "";
+        int ran=(int)Math.floor(Math.random() * (4 - 1 + 1) + 1);
+        switch(ran){
+            case 1:op="+";break;
+            case 2:op="-";break;
+            case 3:op="*";break;
+            case 4:op="/";break;
+        }
+        return op;
+    }
+
+    private void startGame(){
+        int x=0;
+        int y=0;
+        int diff=0;
+        String op = "+";
+        if(score<2){
+            x=generateNumber(5,30);
+            y=generateNumber(10,50);
+            rez=x+y;
+        }
+        else{
+            op=generateOp();
+
+            if(score%3==0) diff+=3;
+            switch(op){
+                case "+":
+                    x=generateNumber(5+diff,50+diff);
+                    y=generateNumber(10+diff,60+diff);
+                    rez=x+y;break;
+                case "-":
+                    x=generateNumber(5+diff,50+diff);
+                    y=generateNumber(10+diff,60+diff);
+                    while(x-y<0){
+                        x=generateNumber(5+diff,50+diff);
+                        y=generateNumber(10+diff,60+diff);
+                    }
+                    rez=x-y;break;
+                case "*":
+                    x=generateNumber(5+diff,15+diff);
+                    y=generateNumber(3,9);
+                    rez=x*y;break;
+                case "/":
+                    x=generateNumber(10+diff,80+diff);
+                    y=generateNumber(3+diff,20+diff);
+                    while(x%y!=0){
+                        x=generateNumber(10,80+diff);
+                        y=generateNumber(3,20+diff);
+                    }
+                    rez=x/y;break;
+            }
+
+        }
+        String eq = x + " " + op + " " + y;
         mainD.setText(eq);
-        rez=x+y;
+
     }
 
 
@@ -204,14 +236,11 @@ public class GameActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
     }
     class Task extends AsyncTask<Void, Void, Void>{
         @Override
         protected Void doInBackground(Void... voids) {
             try {
-
                 Connection conn = JavaConnect.connectDb();
 
                 String SQL = "SELECT score FROM users WHERE username='" + igrac.getUsername() + "'";

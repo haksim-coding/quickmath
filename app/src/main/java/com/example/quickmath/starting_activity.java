@@ -38,16 +38,14 @@ public class starting_activity extends AppCompatActivity {
     Dialog usernameDialog;
 
     SharedPreferences sharedPreferences;
+    NumPadView npv;
 
     public void inits(){
-        submit=findViewById(R.id.gumb);
+        npv = findViewById(R.id.npv);
         mainD=findViewById(R.id.mainD);
-        input=findViewById(R.id.input);
     }
 
-    public int generateNumber() {
-        int min = 1;
-        int max = 100;
+    public int generateNumber(int min,int max) {
         return (int)Math.floor(Math.random() * (max - min + 1) + min);
     }
 
@@ -81,48 +79,99 @@ public class starting_activity extends AppCompatActivity {
         }
         inits();
         startGame();
-       submit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    user_input=Integer.parseInt(String.valueOf(input.getText()));
-                    if(rez != user_input){
+        npv.setSubmitButtonClickListener(new NumPadView.SubmitButtonClickListener() {
+            @Override
+            public void onSubmitButtonClick(int input) {
+                user_input=input;
+                if(rez != user_input){
 
-                            showPopup(view);
+                    showPopup(findViewById(R.id.lejout),false);
 
-                    }
-                    else{
-                        input.setText("");
-                        score++;
-                        startGame();
-                    }
                 }
-            });
-
-
-
+                else{
+                    score++;
+                    if(score==5){
+                        showPopup(findViewById(R.id.lejout),true);
+                    }
+                    startGame();
+                }
+            }
+        });
 
     }
 
-    public void startGame(){
-        int x = generateNumber();
-        int y = generateNumber();
-        String eq = x + " + " + y;
+    private String generateOp(){
+        String op = "";
+        int ran=(int)Math.floor(Math.random() * (4 - 1 + 1) + 1);
+        switch(ran){
+            case 1:op="+";break;
+            case 2:op="-";break;
+            case 3:op="*";break;
+            case 4:op="/";break;
+        }
+        return op;
+    }
+
+    private void startGame(){
+        int x=0;
+        int y=0;
+        String op = "+";
+        if(score<2){
+            x=generateNumber(5,30);
+            y=generateNumber(10,50);
+            rez=x+y;
+        }
+        else{
+            op=generateOp();
+
+            switch(op){
+                case "+":
+                    x=generateNumber(5,50);
+                    y=generateNumber(10,60);
+                    rez=x+y;break;
+                case "-":
+                    x=generateNumber(5,50);
+                    y=generateNumber(10,60);
+                    while(x-y<0){
+                        x=generateNumber(5,50);
+                        y=generateNumber(10,60);
+                    }
+                    rez=x-y;break;
+                case "*":
+                    x=generateNumber(5,15);
+                    y=generateNumber(3,9);
+                    rez=x*y;break;
+                case "/":
+                    x=generateNumber(10,80);
+                    y=generateNumber(3,20);
+                    while(x%y!=0){
+                        x=generateNumber(10,80);
+                        y=generateNumber(3,20);
+                    }
+                    rez=x/y;break;
+            }
+
+        }
+        String eq = x + " " + op + " " + y;
         mainD.setText(eq);
-        rez=x+y;
+
     }
 
-    public void showPopup(View v){
+    public void showPopup(View v,boolean passed){
         EditText usernameEt;
         Button submit;
-        TextView showScore;
+        TextView showScore,info;
 
         usernameDialog.setContentView(R.layout.username_popup);
         usernameEt = usernameDialog.findViewById(R.id.etUsername);
         submit = usernameDialog.findViewById(R.id.finalBtn);
         showScore = usernameDialog.findViewById(R.id.showScore);
+        info = usernameDialog.findViewById(R.id.dynamic);
         usernameDialog.show();
         showScore.setText(String.valueOf(score));
 
+        if(passed) info.setText("Good job, Now do it fast!");
+        info.setText("Nice try, be quicker now!");
 
 
         submit.setOnClickListener(new View.OnClickListener() {
@@ -144,7 +193,7 @@ public class starting_activity extends AppCompatActivity {
                     endTutF();
                 }
                 else{
-                    Toast.makeText(starting_activity.this,username + " is alredy taken!",Toast.LENGTH_LONG).show();
+                    Toast.makeText(starting_activity.this,username + " is already taken!",Toast.LENGTH_LONG).show();
                 }
 
             }

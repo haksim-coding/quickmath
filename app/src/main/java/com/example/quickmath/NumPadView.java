@@ -34,13 +34,13 @@ public class NumPadView extends FrameLayout implements View.OnClickListener {
         initViews();
     }
 
-    public interface CityButtonClickListener {
-        void onCityButtonClick(int input);
+    public interface SubmitButtonClickListener {
+        void onSubmitButtonClick(int input);
     }
 
-    private CityButtonClickListener buttonClickListener;
+    private SubmitButtonClickListener buttonClickListener;
 
-    public void setCityButtonClickListener(CityButtonClickListener listener) {
+    public void setSubmitButtonClickListener(SubmitButtonClickListener listener) {
         this.buttonClickListener = listener;
     }
 
@@ -71,7 +71,7 @@ public class NumPadView extends FrameLayout implements View.OnClickListener {
             case R.id.t9_key_submit: { // handle clear button
                 if (buttonClickListener != null) {
                     if(input.getText().length()>0){
-                        buttonClickListener.onCityButtonClick(Integer.parseInt(String.valueOf(input.getText())));
+                        buttonClickListener.onSubmitButtonClick(Integer.parseInt(String.valueOf(input.getText())));
                         input.setText("");
                     }
 

@@ -10,14 +10,16 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="50dp"
         android:enabled="false"
+        android:fontFamily="monospace"
+        android:hint="Result"
         android:minHeight="48dp"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
         android:singleLine="true"
-        android:text=""
         android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:textSize="34sp"
+        android:textColor="#000000"
+        android:textColorHint="#40000000"
+        android:textSize="48dp"
         android:textStyle="bold" />
 
     <TableLayout
@@ -34,17 +36,26 @@
             <TextView
                 android:id="@+id/t9_key_1"
                 style="@style/keyboard_number_button"
-                android:text="@string/number_one"/>
+                android:fontFamily="@font/numbers"
+                android:text="@string/number_one"
+                android:textColor="#000000"
+                android:textSize="48dp" />
 
             <TextView
                 android:id="@+id/t9_key_2"
                 style="@style/keyboard_number_button"
-                android:text="@string/number_two"/>
+                android:fontFamily="@font/numbers"
+                android:text="@string/number_two"
+                android:textColor="#000000"
+                android:textSize="48dp" />
 
             <TextView
                 android:id="@+id/t9_key_3"
                 style="@style/keyboard_number_button"
-                android:text="@string/number_three"/>
+                android:fontFamily="@font/numbers"
+                android:text="@string/number_three"
+                android:textColor="#000000"
+                android:textSize="48dp" />
         </TableRow>
 
         <TableRow style="@style/keyboard_row">
@@ -52,17 +63,26 @@
             <TextView
                 android:id="@+id/t9_key_4"
                 style="@style/keyboard_number_button"
-                android:text="@string/number_four"/>
+                android:fontFamily="@font/numbers"
+                android:text="@string/number_four"
+                android:textColor="#000000"
+                android:textSize="48dp" />
 
             <TextView
                 android:id="@+id/t9_key_5"
                 style="@style/keyboard_number_button"
-                android:text="@string/number_five"/>
+                android:fontFamily="@font/numbers"
+                android:text="@string/number_five"
+                android:textColor="#000000"
+                android:textSize="48dp" />
 
             <TextView
                 android:id="@+id/t9_key_6"
                 style="@style/keyboard_number_button"
-                android:text="@string/number_six"/>
+                android:fontFamily="@font/numbers"
+                android:text="@string/number_six"
+                android:textColor="#000000"
+                android:textSize="48dp" />
         </TableRow>
 
         <TableRow style="@style/keyboard_row">
@@ -70,37 +90,55 @@
             <TextView
                 android:id="@+id/t9_key_7"
                 style="@style/keyboard_number_button"
-                android:text="@string/number_seven"/>
+                android:fontFamily="@font/numbers"
+                android:text="@string/number_seven"
+                android:textColor="#000000"
+                android:textSize="48dp" />
 
             <TextView
                 android:id="@+id/t9_key_8"
                 style="@style/keyboard_number_button"
-                android:text="@string/number_eight"/>
+                android:fontFamily="@font/numbers"
+                android:text="@string/number_eight"
+                android:textColor="#000000"
+                android:textSize="48dp" />
 
             <TextView
                 android:id="@+id/t9_key_9"
                 style="@style/keyboard_number_button"
-                android:text="@string/number_nine"/>
+                android:fontFamily="@font/numbers"
+                android:text="@string/number_nine"
+                android:textColor="#000000"
+                android:textSize="48dp" />
         </TableRow>
 
         <TableRow style="@style/keyboard_row">
 
             <TextView
-                android:id="@+id/t9_key_submit"
+                android:id="@+id/t9_key_backspace"
                 style="@style/keyboard_button"
-                android:text="@string/btn_clear"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
+                android:fontFamily="@font/numbers"
+                android:text="@string/btn_backspace"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#000000"
+                android:textSize="38dp" />
 
             <TextView
                 android:id="@+id/t9_key_0"
                 style="@style/keyboard_number_button"
-                android:text="@string/number_zero"/>
+                android:fontFamily="@font/numbers"
+                android:text="@string/number_zero"
+                android:textColor="#000000"
+                android:textSize="38dp" />
 
             <TextView
-                android:id="@+id/t9_key_backspace"
+                android:id="@+id/t9_key_submit"
                 style="@style/keyboard_button"
-                android:text="@string/btn_backspace"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
+                android:fontFamily="@font/numbers"
+                android:text="@string/btn_submit"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#000000"
+                android:textSize="30dp" />
         </TableRow>
     </TableLayout>
 </LinearLayout>

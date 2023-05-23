@@ -10,6 +10,6 @@
     <string name="number_seven">7</string>
     <string name="number_eight">8</string>
     <string name="number_nine">9</string>
-    <string name="btn_clear">Submit</string>
+    <string name="btn_submit">Submit</string>
     <string name="btn_backspace">\u232B</string>
 </resources>

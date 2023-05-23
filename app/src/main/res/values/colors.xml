@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="gold">#88780B</color>
     <color name="popupBackground">#034C6D</color>
+    <color name="mainBackground">#6FE6CE</color>
+    <color name="buttonBackground">#000000</color>
 </resources>

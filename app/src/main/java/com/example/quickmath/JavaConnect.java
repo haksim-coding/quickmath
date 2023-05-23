@@ -11,8 +11,8 @@ public class JavaConnect {
 
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            //?useSSL=false
-            String url="jdbc:mysql://potnar.duckdns.org:25566/players?useSSL=false";
+            String url="jdbc:mysql://192.168.88.54:25566/players?useSSL=false";
+            //String url="jdbc:mysql://potnar.duckdns.org:25566/players?useSSL=false";
             String user = "korisnik";
             String pass="zavrsni";
             Connection conn = DriverManager.getConnection(url,user,pass);

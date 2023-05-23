@@ -80,16 +80,6 @@ public class main_menu extends AppCompatActivity {
 
         inits();
 
-        sharedPreferences = getSharedPreferences("BASE",Context.MODE_PRIVATE);
-        Boolean state = sharedPreferences.getBoolean("tutPassed",false);
-
-        json = sharedPreferences.getString("Player","");
-        igrac = gson.fromJson(json,Player.class);
-
-        TextView tv = findViewById(R.id.test);
-        String finale = igrac.getUsername() + " " + igrac.getScore();
-        tv.setText(finale);
-
         btnLeaderboard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
